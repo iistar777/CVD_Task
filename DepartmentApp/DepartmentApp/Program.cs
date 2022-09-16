@@ -7,7 +7,7 @@ namespace DepartmentApp
     {
         static void Main(string[] args)
         {
-            DepartmentService departmentService = new DepartmentService();
+            DepartmentService departmentService = new DepartmentService(Properties.Settings.Default.BaseUrlAddress);
 
             string action = string.Empty;
 
@@ -33,13 +33,13 @@ namespace DepartmentApp
                             answer = Console.ReadLine().ToLower();
                         }
 
-                        Console.WriteLine(departmentService.GetSummarizedSalaryByDepartmentList(answer == "y"));
+                        Console.WriteLine(departmentService.GetSummarizedSalaryByDepartmentList(answer == "y").Result);
                         break;
                     case "2":
-                        Console.WriteLine(departmentService.GetDepartmentWithMaxSalary());
+                        Console.WriteLine(departmentService.GetDepartmentWithMaxSalary().Result);
                         break;
                     case "3":
-                        Console.WriteLine(departmentService.GetChiefsSalariesDescList());
+                        Console.WriteLine(departmentService.GetChiefsSalariesDescList().Result);
                         break;
                     case "exit":
                         break;

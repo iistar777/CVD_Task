@@ -4,10 +4,10 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{CE68FED9-BCA0-4AE8-8E99-52B96FFB1023}</ProjectGuid>
-    <OutputType>Exe</OutputType>
-    <RootNamespace>DepartmentApp</RootNamespace>
-    <AssemblyName>DepartmentApp</AssemblyName>
+    <ProjectGuid>{7303B7C3-64AE-45B2-967F-615B1AD05CDC}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>DAL</RootNamespace>
+    <AssemblyName>DAL</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -32,10 +32,10 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.13.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -46,32 +46,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Converters\DepartmentConverter.cs" />
-    <Compile Include="Infrastructure\NetClient.cs" />
-    <Compile Include="Models\Department.cs" />
-    <Compile Include="Models\Employee.cs" />
-    <Compile Include="Program.cs" />
+    <Compile Include="CommonAttributes\ChiefDepartmentSalaryAttributes.cs" />
+    <Compile Include="CommonAttributes\DepartmentSalaryAttributes.cs" />
+    <Compile Include="ResponseAttributes\BaseResponseDTO.cs" />
+    <Compile Include="ResponseAttributes\GetChiefsSalariesListDTO.cs" />
+    <Compile Include="ResponseAttributes\GetMaxDepartmentSalaryDTO.cs" />
+    <Compile Include="RequestAttributes\GetSummarizedSalaryByDepartmentListAttributesDTO.cs" />
+    <Compile Include="ResponseAttributes\GetSummarizedSalaryByDepartmentListDTO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Properties\Settings.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTimeSharedInput>True</DesignTimeSharedInput>
-      <DependentUpon>Settings.settings</DependentUpon>
-    </Compile>
-    <Compile Include="Services\DepartmentService.cs" />
+    <Compile Include="ResponseAttributes\ResponseInfo.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <None Include="App.config" />
-    <None Include="packages.config" />
-    <None Include="Properties\Settings.settings">
-      <Generator>SettingsSingleFileGenerator</Generator>
-      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\DAL\DAL.csproj">
-      <Project>{7303B7C3-64AE-45B2-967F-615B1AD05CDC}</Project>
-      <Name>DAL</Name>
-    </ProjectReference>
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
