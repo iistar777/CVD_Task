@@ -21,14 +21,21 @@ namespace DepartmentApp.Converters
 
             if (dto.Salaries.Any())
             {
-                foreach(DepartmentSalaryAttributes salary in dto.Salaries)
+                if (dto.RespInfo.IsSuccessful)
                 {
-                    builder.Append($"Департамент \"{salary.DepartmentName}\": суммарная з/п составляет {salary.DepartmentSalary} рублей\n");
+                    foreach (DepartmentSalaryAttributes salary in dto.Salaries)
+                    {
+                        builder.AppendLine($"Департамент \"{salary.DepartmentName}\": суммарная з/п составляет {salary.DepartmentSalary} рублей");
+                    }
+                }
+                else
+                {
+                    builder.AppendLine($"Произошла ошибка: {dto.RespInfo.ErrorMessage}");
                 }
             }
             else
             {
-                builder.Append("Информация не найдена\n");
+                builder.AppendLine("Информация не найдена");
             }
 
             return builder.ToString();
@@ -45,11 +52,18 @@ namespace DepartmentApp.Converters
 
             if (dto.DepartmentSalary != null)
             {
-                builder.Append($"Максимальная з/п среди департаментов составляет {dto.DepartmentSalary.DepartmentSalary} рублей (Департамент \"{dto.DepartmentSalary.DepartmentName}\")\n");
+                if (dto.RespInfo.IsSuccessful)
+                {
+                    builder.AppendLine($"Максимальная з/п среди департаментов составляет {dto.DepartmentSalary.DepartmentSalary} рублей (Департамент \"{dto.DepartmentSalary.DepartmentName}\")");
+                }
+                else
+                {
+                    builder.AppendLine($"Произошла ошибка: {dto.RespInfo.ErrorMessage}");
+                }
             }
             else
             {
-                builder.Append("Информация не найдена\n");
+                builder.AppendLine("Информация не найдена");
             }
 
             return builder.ToString();
@@ -65,14 +79,21 @@ namespace DepartmentApp.Converters
 
             if (dto.Salaries.Any())
             {
-                foreach (ChiefDepartmentSalaryAttributes salary in dto.Salaries)
+                if (dto.RespInfo.IsSuccessful)
                 {
-                    builder.Append($"Руководитель: {salary.ChiefName} - з/п составляет {salary.DepartmentSalary} рублей (Департамент \"{salary.DepartmentName}\")\n");
+                    foreach (ChiefDepartmentSalaryAttributes salary in dto.Salaries)
+                    {
+                        builder.AppendLine($"Руководитель: {salary.ChiefName} - з/п составляет {salary.DepartmentSalary} рублей (Департамент \"{salary.DepartmentName}\")");
+                    }
+                }
+                else
+                {
+                    builder.AppendLine($"Произошла ошибка: {dto.RespInfo.ErrorMessage}");
                 }
             }
             else
             {
-                builder.Append("Информация не найдена\n");
+                builder.AppendLine("Информация не найдена");
             }
 
             return builder.ToString();
