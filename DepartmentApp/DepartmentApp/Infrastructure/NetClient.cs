@@ -49,8 +49,6 @@ namespace DepartmentApp.Infrastructure
 
                 using (HttpClient client = new HttpClient(handler))
                 {
-                    client.Timeout = TimeSpan.FromMinutes(5);
-
                     string jsonRequest = JsonConvert.SerializeObject(value, new JsonSerializerSettings() { NullValueHandling = NullValueHandling.Ignore });
                     using (HttpContent content = new StringContent(jsonRequest, Encoding.UTF8, "application/json"))
                     {
