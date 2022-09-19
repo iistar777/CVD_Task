@@ -1,28 +1,34 @@
-﻿using DAL.CommonAttributes;
-using DAL.RequestAttributes;
+﻿using DAL.RequestAttributes;
 using DAL.ResponseAttributes;
 using Microsoft.AspNetCore.Mvc;
+using WebApi.Services;
 
 namespace WebApi.Controllers
 {
     /// <summary>
-    /// Контроллер по работе с лицевыми счетами
+    /// Контроллер по работе с департаментами
     /// </summary>
     [Route("api/[controller]")]
     [ApiController]
     public class DepartmentController : ControllerBase
     {
         /// <summary>
+        /// Сервис для работы с департаментами
+        /// </summary>
+        private readonly DepartmentManagerService _departmentManagerService;
+
+        /// <summary>
         /// Конструктор
         /// </summary>
-        public DepartmentController()
+        public DepartmentController(IConfiguration configuration)
         {
+            _departmentManagerService = new DepartmentManagerService(configuration);
         }
 
         /// <summary>
         /// Получить суммарную зарплату в разрезе департаментов (без руководителей и с руководителями)
         /// </summary>
-        /// <param name="attributes"></param>
+        /// <param name="attributes">Атрибуты для получения данных</param>
         /// <returns></returns>
         [HttpPost]
         [Route("getsummarizedsalarybydepartmentlist")]
@@ -33,14 +39,9 @@ namespace WebApi.Controllers
                 return new BadRequestResult();
             }
 
-            return new JsonResult(new GetSummarizedSalaryByDepartmentListDTO()
-            {
-                Salaries = new List<DepartmentSalaryAttributes>()
-                {
-                    new DepartmentSalaryAttributes() { DepartmentName = "A", DepartmentSalary = 100},
-                    new DepartmentSalaryAttributes() { DepartmentName = "B", DepartmentSalary = 200 }
-                }
-            });
+            GetSummarizedSalaryByDepartmentListDTO dto = _departmentManagerService.GetSummarizedSalaryByDepartmentList(attributes).Result;
+
+            return new JsonResult(dto);
         }
 
         /// <summary>
@@ -51,14 +52,9 @@ namespace WebApi.Controllers
         [Route("getdepartmentwithmaxsalary")]
         public ActionResult GetDepartmentWithMaxSalary()
         {
-            return new JsonResult(new GetMaxDepartmentSalaryDTO()
-            {
-                DepartmentSalary = new DepartmentSalaryAttributes()
-                {
-                    DepartmentName = "A",
-                    DepartmentSalary = 500
-                }
-            });
+            GetMaxDepartmentSalaryDTO dto = _departmentManagerService.GetDepartmentWithMaxSalary().Result;
+
+            return new JsonResult(dto);
         }
 
         /// <summary>
@@ -69,14 +65,9 @@ namespace WebApi.Controllers
         [Route("getchiefssalariesdesclist")]
         public ActionResult GetChiefsSalariesDescList()
         {
-            return new JsonResult(new GetChiefsSalariesListDTO()
-            {
-                Salaries = new List<ChiefDepartmentSalaryAttributes>()
-                {
-                    new ChiefDepartmentSalaryAttributes() { ChiefName = "Ivan", DepartmentName = "A", DepartmentSalary = 300 },
-                    new ChiefDepartmentSalaryAttributes() { ChiefName = "Petr", DepartmentName = "B", DepartmentSalary = 400 }
-                }
-            });
+            GetChiefsSalariesListDTO dto = _departmentManagerService.GetChiefsSalariesDescList().Result;
+
+            return new JsonResult(dto);
         }
     }
 }
